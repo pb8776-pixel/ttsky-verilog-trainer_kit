@@ -7,7 +7,7 @@
 `default_nettype none
 
 // Digital Trainer Kit with all basic gates
-module digital_trainer_kit (
+module tt_um_digital_trainer_kit (
     input  wire a, b,       // two input signals
     output wire and_out,
     output wire or_out,
