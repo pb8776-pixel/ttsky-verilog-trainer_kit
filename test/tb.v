@@ -1,49 +1,46 @@
-`default_nettype none
 `timescale 1ns / 1ps
+`default_nettype none
 
-/* This testbench just instantiates the module and makes some convenient wires
-   that can be driven / tested by the cocotb test.py.
-*/
-module tb ();
+module tb_digital_trainer;
 
-  // Dump the signals to a VCD file. You can view it with gtkwave or surfer.
-  initial begin
-    $dumpfile("tb.vcd");
-    $dumpvars(0, tb);
-    #1;
-  end
+    reg a, b;
+    wire and_out, or_out, not_a, nand_out, nor_out, xor_out, xnor_out;
 
-  // Wire up the inputs and outputs:
-  reg clk;
-  reg rst_n;
-  reg ena;
-  reg [7:0] ui_in;
-  reg [7:0] uio_in;
-  wire [7:0] uo_out;
-  wire [7:0] uio_out;
-  wire [7:0] uio_oe;
-`ifdef GL_TEST
-  wire VPWR = 1'b1;
-  wire VGND = 1'b0;
-`endif
+    // Instantiate the DUT
+    tt_um_digital_trainer_kit user_project (
+        .a(a), .b(b),
+        .and_out(and_out),
+        .or_out(or_out),
+        .not_a(not_a),
+        .nand_out(nand_out),
+        .nor_out(nor_out),
+        .xor_out(xor_out),
+        .xnor_out(xnor_out)
+    );
 
-  // Replace tt_um_example with your module name:
-  tt_um_example user_project (
+    // Stimulus
+    initial begin
+        $dumpfile("tb_digital_trainer.vcd");
+        $dumpvars(0, tb_digital_trainer);
 
-      // Include power ports for the Gate Level test:
-`ifdef GL_TEST
-      .VPWR(VPWR),
-      .VGND(VGND),
-`endif
+        $display("A B | AND OR NOT NAND NOR XOR XNOR");
 
-      .ui_in  (ui_in),    // Dedicated inputs
-      .uo_out (uo_out),   // Dedicated outputs
-      .uio_in (uio_in),   // IOs: Input path
-      .uio_out(uio_out),  // IOs: Output path
-      .uio_oe (uio_oe),   // IOs: Enable path (active high: 0=input, 1=output)
-      .ena    (ena),      // enable - goes high when design is selected
-      .clk    (clk),      // clock
-      .rst_n  (rst_n)     // not reset
-  );
+        // Loop through all input combinations
+        a = 0; b = 0; #10 display_outputs();
+        a = 0; b = 1; #10 display_outputs();
+        a = 1; b = 0; #10 display_outputs();
+        a = 1; b = 1; #10 display_outputs();
+
+        $finish;
+    end
+
+    task display_outputs;
+        begin
+            $display("%b %b |  %b   %b   %b    %b    %b    %b    %b",
+                a, b,
+                and_out, or_out, not_a, nand_out, nor_out, xor_out, xnor_out
+            );
+        end
+    endtask
 
 endmodule
