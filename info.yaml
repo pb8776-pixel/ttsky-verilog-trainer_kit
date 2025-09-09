@@ -23,8 +23,8 @@ project:
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
+  ui[0]: "Input A"
+  ui[1]: "Input A"
   ui[2]: ""
   ui[3]: ""
   ui[4]: ""
@@ -33,13 +33,13 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
+  uo[0]: "AND Output"
+  uo[1]: "OR Output"
+  uo[2]: "NOT A Output"
+  uo[3]: "NAND Output"
+  uo[4]: "NOR Output"
+  uo[5]: "XOR Output"
+  uo[6]: "XNOR Output"
   uo[7]: ""
 
   # Bidirectional pins
