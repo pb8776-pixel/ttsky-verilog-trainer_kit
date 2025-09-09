@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 `default_nettype none
 
-module tb_digital_trainer;
+module tb ();
 
     reg a, b;
     wire and_out, or_out, not_a, nand_out, nor_out, xor_out, xnor_out;
